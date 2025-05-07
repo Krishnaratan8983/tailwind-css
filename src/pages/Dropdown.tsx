@@ -7,12 +7,13 @@ export default function DropdownPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [bounceMap, setBounceMap] = useState<{ [key: number]: boolean }>({});
 
+  // Sample messages
   const messages = [
     {
       id: 1,
       name: "Cool guy",
       message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam urna orci, blandit eu ante nec, sodales vehicula nisi. Mauris vel nibh imperdiet, tempus lectus ac, faucibus quam. Praesent euismod congue cursus. Phasellus tincidunt sem vitae neque egestas, ut egestas justo venenatis.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam urna orci, blandit eu ante nec, sodales vehicula nisi...",
     },
     { id: 2, name: "Someone", message: "Lorem ipsum" },
     { id: 3, name: "Someone else", message: "Lorem ipsum" },
@@ -20,16 +21,21 @@ export default function DropdownPage() {
     { id: 5, name: "No one", message: "Cool!" },
   ];
 
+  // Handles opening and closing the dropdown
   const handleToggle = () => {
     if (!collapsed) {
+      // Collapse the list
       setCollapsed(true);
     } else {
+      // Expand and trigger bounce animation
       const newBounceMap: { [key: number]: boolean } = {};
       messages.slice(1).forEach((msg) => {
         newBounceMap[msg.id] = true;
       });
       setBounceMap(newBounceMap);
       setCollapsed(false);
+
+      // Clear bounce effect after animation
       setTimeout(() => {
         setBounceMap({});
       }, 200);
@@ -40,12 +46,9 @@ export default function DropdownPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div
         className="rounded-xl border-2 border-red-500 p-4"
-        style={{
-          width: "476px",
-          backgroundColor: "#CECED9",
-        }}
+        style={{ width: "476px", backgroundColor: "#CECED9" }}
       >
-        {/* Always show Cool guy */}
+        {/* Always show the "Cool guy" message */}
         {messages
           .filter((msg) => msg.name === "Cool guy")
           .map((msg) => {
@@ -71,7 +74,7 @@ export default function DropdownPage() {
             );
           })}
 
-        {/* Animate remaining messages */}
+        {/* Animate the rest of the messages */}
         <AnimatePresence initial={false}>
           {!collapsed && (
             <motion.div
@@ -98,38 +101,21 @@ export default function DropdownPage() {
                         <h2 className="font-bold">{msg.name}</h2>
                         <p>{msg.message}</p>
 
-                        {(msg.name === "No one") && (
+                        {/* Conditional icons */}
+                        {msg.name === "No one" && (
                           <div className="flex space-x-2 mt-2">
-                            <img
-                              src={Frame}
-                              alt="Frame icon"
-                              className="w-6 h-6"
-                            />
-                            <img
-                              src={FrameTwo}
-                              alt="Frame icon"
-                              className="w-6 h-6"
-                            />
+                            <img src={Frame} alt="Frame icon" className="w-6 h-6" />
+                            <img src={FrameTwo} alt="Frame icon" className="w-6 h-6" />
                           </div>
                         )}
-
                         {msg.name === "Someone else" && (
                           <div className="mt-2">
-                            <img
-                              src={FrameTwo}
-                              alt="Frame icon"
-                              className="w-6 h-6"
-                            />
+                            <img src={FrameTwo} alt="Frame icon" className="w-6 h-6" />
                           </div>
                         )}
-
                         {msg.name === "Who else" && (
                           <div className="mt-2">
-                            <img
-                              src={Frame}
-                              alt="Frame icon"
-                              className="w-6 h-6"
-                            />
+                            <img src={Frame} alt="Frame icon" className="w-6 h-6" />
                           </div>
                         )}
 
